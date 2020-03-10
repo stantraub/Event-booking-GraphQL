@@ -5,7 +5,7 @@ const { buildSchema } = require('graphql')
 const mongoose = require('mongoose')
 const app = express()
 
-const events = []
+const Space = require('./models/space')
 
 app.use(bodyParser.json())
 
@@ -13,28 +13,91 @@ app.use(
   "/graphql",
   graphqlHttp({
     schema: buildSchema(`
-
-        type Event {
+        type Space {
             _id: ID
-            title: String!
+            name: String!
+            address: String!
+            city: String!
+            state: String!
+            zipcode: Int!
             description: String!
-            price: Float!
-            date: String!
+            email: String!
+            cost: Int!
+            phone: String
+            website: String
+            openHour: String!
+            closingHour: String!
+            neighborhood: String
+            officeCapacity: Int
+            peopleCapacity: Int
+            availability: Boolean
+            deskDay: Boolean
+            sharedDesk: Int
+            meetingRooms: Int
+            hours24Access: Boolean
+            transitStationMiles: Float
+            wellnessRoom: Boolean
+            phoneBooths: Int
+            eventSpace: Boolean
+            bikeParking: Boolean
+            petFriendly: Boolean
+            snacksDrinksIncluded: Boolean
+            teaCoffeeIncluded: Boolean
+            pingPong: Boolean
+            billiards: Boolean
+            foosball: Boolean
+            showers: Boolean
+            onsiteGym: Boolean
+            printersIncluded: Boolean
+            bocceBall: Boolean
+            napRoom: Boolean
         }
 
-        input EventInput {
-            title: String!
+        input SpaceInput {
+            name: String!
+            address: String!
+            city: String!
+            state: String!
+            zipcode: Int!
             description: String!
-            price: Float!
-            date: String!
+            email: String!
+            cost: Int!
+            phone: String
+            website: String
+            openHour: String!
+            closingHour: String!
+            neighborhood: String
+            officeCapacity: Int
+            peopleCapacity: Int
+            availability: Boolean
+            deskDay: Boolean
+            sharedDesk: Int
+            meetingRooms: Int
+            hours24Access: Boolean
+            transitStationMiles: Float
+            wellnessRoom: Boolean
+            phoneBooths: Int
+            eventSpace: Boolean
+            bikeParking: Boolean
+            petFriendly: Boolean
+            snacksDrinksIncluded: Boolean
+            teaCoffeeIncluded: Boolean
+            pingPong: Boolean
+            billiards: Boolean
+            foosball: Boolean
+            showers: Boolean
+            onsiteGym: Boolean
+            printersIncluded: Boolean
+            bocceBall: Boolean
+            napRoom: Boolean
         }
         type RootQuery {
-            events: [Event!]!
+            spaces: [Space!]!
 
         }
 
         type RootMutation {
-            createEvent(eventInput: EventInput): Event
+            createSpace(spaceInput: SpaceInput): Space
         }
 
         schema {
@@ -43,20 +106,68 @@ app.use(
         }
     `),
     rootValue: {
-      events: () => {
-        return events;
+      spaces: () => {
+       return Space.find()
+        .then(spaces => {
+          return spaces.map(space => {
+            return { ...space._doc, _id: space.id}
+          })
+        })
+        .catch(err => {
+          console.log(err)
+        })
       },
-      createEvent: args => {
-        const event = {
-            _id: Math.random().toString(),
-            title: args.eventInput.title,
-            description: args.eventInput.description,
-            price: +args.eventInput.price,
-            date: args.eventInput.date
-        }
-
-        events.push(event)
-        return event
+      createSpace: args => {
+        const space = new Space({
+          name: args.spaceInput.name,
+          address: args.spaceInput.address,
+          city: args.spaceInput.city,
+          state: args.spaceInput.state,
+          zipcode: args.spaceInput.zipcode,
+          description: args.spaceInput.description,
+          email: args.spaceInput.email,
+          cost: +args.spaceInput.cost,
+          phone: args.spaceInput.phone,
+          website: args.spaceInput.website,
+          openHour: args.spaceInput.openHour,
+          closingHour: args.spaceInput.closingHour,
+          neighborhood: args.spaceInput.neighborhood,
+          officeCapacity: args.spaceInput.officeCapacity,
+          peopleCapacity: args.spaceInput.peopleCapacity,
+          availability: args.spaceInput.availability,
+          deskDay: args.spaceInput.deskDay,
+          sharedDesk: +args.spaceInput.sharedDesk,
+          meetingRooms: +args.spaceInput.meetingRooms,
+          hours24Access: args.spaceInput.hours24Access,
+          transitStationMiles: args.spaceInput.transitStationMiles,
+          wellnessRoom: args.spaceInput.wellnessRoom,
+          phoneBooths: args.spaceInput.phoneBooths,
+          eventSpace: args.spaceInput.eventSpace,
+          bikeParking: args.spaceInput.bikeParking,
+          petFriendly: args.spaceInput.petFriendly,
+          snacksDrinksIncluded: args.spaceInput.snacksDrinksIncluded,
+          teaCoffeeIncluded: args.spaceInput.teaCoffeeIncluded,
+          pingPong: args.spaceInput.pingPong,
+          billiards: args.spaceInput.billiards,
+          foosball: args.spaceInput.foosball,
+          showers: args.spaceInput.showers,
+          onsiteGym: args.spaceInput.onsiteGym,
+          printersIncluded: args.spaceInput.printersIncluded,
+          bocceBall: args.spaceInput.bocceBall,
+          napRoom: args.spaceInput.napRoom
+        })
+        return space
+          .save()
+          .then(result => {
+            console.log(result)
+            return {
+              ...result._doc, _id: space._doc._id.toString()
+          }})
+          .catch(err => {
+            console.log(err)
+            throw err
+          })
+       
       }
     },
     graphiql: true
@@ -65,7 +176,7 @@ app.use(
 
 mongoose
   .connect(
-    `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0-9taoe.mongodb.net/test?retryWrites=true&w=majority`
+    `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0-9taoe.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`
   )
   .then(() => 
     app.listen(3000)
