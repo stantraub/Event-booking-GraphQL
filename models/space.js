@@ -146,6 +146,10 @@ const spaceSchema = new Schema({
     napRoom: {
         type: Boolean,
         required: false
+    },
+    creator: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     }
 })
 
