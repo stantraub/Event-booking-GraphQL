@@ -1,51 +1,85 @@
 const bcrypt = require('bcryptjs')
 const Space = require('../../models/space')
 const User = require('../../models/user')
+const Booking = require('../../models/booking')
 
 
-
-const spaces = spaceIds => {
-    return Space.find({ _id: { $in: spaceIds } })
-        .then(spaces => {
-            return spaces.map(space => {
-                return { ...space._doc, _id: space.id, creator: user.bind(this, space.creator) }
-            })
+const spaces = async spaceIds => {
+    try {
+        const spaces = await Space.find({ _id: { $in: spaceIds } })
+        return spaces.map(space => {
+            return { 
+                ...space._doc, 
+                _id: space.id, 
+                creator: user.bind(this, space.creator) 
+            }
         })
-        .catch(err => {
-            console.log(err)
-        })
+    } catch (err) {
+        throw err
+    }
 }
 
-const user = userId => {
-    return User.findById(userId)
-        .then(user => {
-            return { ...user._doc, id: user.id, createdSpaces: spaces.bind(this, user._doc.createdSpaces) };
-        })
-        .catch(err => {
-            throw err
+const singleSpace = async spaceId => {
+    try {
+        const space = await Space.findById(spaceId)
+        return {
+            ...space._doc,
+            _id: space.id, 
+            creator: user.bind(this, space.creator)
         }
-        )
+    } catch (error) {
+        throw error
+    }
+}
+
+const user = async userId => {
+    try {
+        const user = await User.findById(userId)
+        return { 
+            ...user._doc, 
+            id: user.id, 
+            createdSpaces: spaces.bind(this, user._doc.createdSpaces) };
+        }
+    catch (err) {
+        throw err
+    }
 }
 
 module.exports = {
-    spaces: () => {
-        return Space.find()
-            .then(spaces => {
-                return spaces.map(space => {
-                    return {
-                        ...space._doc,
-                        _id: space.id,
-                        creator: user.bind(this, space._doc.creator)
-                    }
-                })
+    spaces: async () => {
+        try {
+            const spaces = await Space.find()
+            return spaces.map(space => {
+                return {
+                    ...space._doc,
+                    _id: space.id,
+                    creator: user.bind(this, space._doc.creator)
+                }
             })
-            .catch(err => {
-                console.log(err)
-            })
+        } catch(err) {
+            throw(err)
+        }
     },
-    createSpace: args => {
+    bookings: async () => {
+        try {
+            const bookings = await Booking.find()
+            return bookings.map(booking => {
+                return {
+                    ...booking._doc,
+                    _id: booking.id, 
+                    user: user.bind(this, booking._doc.user),
+                    space: singleSpace.bind(this, booking._doc.space),
+                    createdAt: new Date(booking._doc.createdAt).toISOString(),
+                    updatedAt: new Date(booking._doc.updatedAt).toISOString()
+                }
+            })
+        } catch (err) {
+            throw err
+        }
+    },
+    createSpace: async args => {
         const space = new Space({
-            creator: "5e67d88861e2a560241aef03",
+            creator: "5e6803cc8bcd7a760a001944",
             name: args.spaceInput.name,
             address: args.spaceInput.address,
             city: args.spaceInput.city,
@@ -84,52 +118,58 @@ module.exports = {
             napRoom: args.spaceInput.napRoom
         })
         let createdSpace;
-        return space
-            .save()
-            .then(result => {
-                createdSpace = {
-                    ...result._doc, _id: result._doc._id.toString(),
-                    creator: user.bind(this, result._doc.creator)
-                }
-                return User.findById("5e67d88861e2a560241aef03")
-            })
-            .then(user => {
-                if (!user) {
-                    throw new Error("User not found.");
-                }
-                user.createdSpaces.push(space)
-                return user.save()
-            })
-            .then(result => {
-                return createdSpace
-            })
-            .catch(err => {
-                console.log(err)
-                throw err
-            })
-    },
-    createUser: args => {
-        User.findOne({ email: args.userInput.email })
-            .then(user => {
-                if (user) {
-                    throw new Error('User exists already.')
-                }
-
-                return bcrypt.hash(args.userInput.password, 12);
-            })
-            .then(hashedPassword => {
-                const user = new User({
-                    email: args.userInput.email,
-                    password: hashedPassword
-                });
-                return user.save()
+        try {
+            const result = await space.save()
+            createdSpace = {
+                ...result._doc, _id: result._doc._id.toString(),
+                creator: user.bind(this, result._doc.creator)
             }
-            )
-            .then(result => {
-                return { ...result._doc, password: null, _id: result.id }
-            })
-            .catch(err => {
-                console.log(err)
-            })
+            const creator = await User.findById("5e6803cc8bcd7a760a001944")
+            if (!creator) {
+                throw new Error("User not found.");
+            }
+            creator.createdSpaces.push(space)
+            await creator.save()
+            return createdSpace
+        }  catch(err) {
+            throw err
+        }
+    },
+    createUser: async args => {
+        try {
+            const exisitingUser = await User.findOne({ email: args.userInput.email })
+            if (exisitingUser) {
+                throw new Error('User exists already.')
+            }
+
+            const hashedPassword = await bcrypt.hash(args.userInput.password, 12);
+
+            const user = new User({
+                email: args.userInput.email,
+                password: hashedPassword
+            });
+            const result = await user.save()
+
+            return { ...result._doc, password: null, _id: result.id }
+
+        } catch(err) {
+            throw err
+        }   
+    },
+    bookSpace: async args => {
+        const fetchedSpace = await Space.findOne({_id: args.spaceId})
+        const booking = new Booking({
+            userId: "5e6803cc8bcd7a760a001944",
+            space: fetchedSpace
+        })
+        const result = await booking.save()
+        return {
+            ...result._doc,
+            _id: result.id,
+            user: user.bind(this, booking._doc.user),
+            space: singleSpace.bind(this, booking._doc.space),
+            createdAt: new Date(result._doc.createdAt).toISOString(),
+            updatedAt: new Date(result._doc.updatedAt).toISOString()
+        }
     }
 }
