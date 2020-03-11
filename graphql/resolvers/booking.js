@@ -3,9 +3,9 @@ const Space = require('../../models/space')
 const { transformSpace, transformBooking } = require('./merge')
 
 
-
 module.exports = {
-    spaces: async () => {
+    spaces: async (args, req) => {
+
         try {
             const spaces = await Space.find()
             return spaces.map(space => {
@@ -69,7 +69,7 @@ module.exports = {
         try {
             const result = await space.save()
             createdSpace = transformSpace(result)
-            const creator = await User.findById("5e6803cc8bcd7a760a001944")
+            const creator = await User.findById(req.user.id)
             if (!creator) {
                 throw new Error("User not found.");
             }
@@ -80,16 +80,24 @@ module.exports = {
             throw err
         }
     },
-    bookSpace: async args => {
+    bookSpace: async (args, req) => {
+        if (!req.isAuth) {
+          throw new Error("Unauthenticated");
+        }
+
         const fetchedSpace = await Space.findOne({ _id: args.spaceId })
         const booking = new Booking({
-            userId: "5e6803cc8bcd7a760a001944",
+            userId: req.user.id,
             space: fetchedSpace
         })
         const result = await booking.save()
         return transformBooking(result)
     },
-    cancelBooking: async args => {
+    cancelBooking: async (args, req) => {
+        if (!req.isAuth) {
+          throw new Error("Unauthenticated");
+        }
+
         try {
             const booking = await Booking.findById(args.bookingId).populate('space')
             const space = transformSpace(booking.space)

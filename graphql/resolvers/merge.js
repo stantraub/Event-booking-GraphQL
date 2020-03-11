@@ -27,7 +27,7 @@ const user = async userId => {
         const user = await User.findById(userId)
         return {
             ...user._doc,
-            id: user.id,
+            _id: user.id,
             createdSpaces: spaces.bind(this, user._doc.createdSpaces)
         };
     }
