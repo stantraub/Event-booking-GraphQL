@@ -57,6 +57,12 @@ type User {
     createdSpaces: [Space!]
 }
 
+type AuthData {
+    userid: ID!
+    token: String!
+    tokenExpiration: Int!
+}
+
 input SpaceInput {
     name: String!
     address: String!
@@ -104,7 +110,7 @@ input UserInput {
 type RootQuery {
     spaces: [Space!]!
     bookings: [Booking!]!
-
+    login(email: String!, password: String!): AuthData!
 }
 
 type RootMutation {
