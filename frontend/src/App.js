@@ -4,9 +4,9 @@ import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
 import NavBar from "./components/nav/navbar"
 import AuthPage from "./pages/Auth"
 import BookingsPage from "./pages/Bookings"
-import SpacePage from "./pages/Spaces"
+import SpacesPage from "./pages/Spaces"
+import Spaces from './components/spaces/space_index_container'
 import AuthContext from './context/auth-context'
-import './App.css';
 
 class App extends Component {
   state = {
@@ -35,7 +35,7 @@ class App extends Component {
                 {this.state.token && <Redirect from="/" to="/spaces" exact />}
                 {this.state.token && <Redirect from="/auth" to="/spaces" exact />}
                 {!this.state.token && <Route path="/auth" component={AuthPage} />}
-                <Route path="/spaces" component={SpacePage} />
+                <Route path="/spaces" component={Spaces} />
                 {this.state.token && <Route path="/bookings" component={BookingsPage} />}
                 {!this.state.token && <Redirect to="/auth" exact />}
                 </Switch>

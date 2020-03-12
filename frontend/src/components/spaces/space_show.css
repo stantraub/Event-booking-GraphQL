@@ -1,0 +1,358 @@
+.space-show-main-div {
+    color: rgb(72, 72, 72);
+    font-size: 16px;
+    width: 100%;
+}
+
+.space-show-main-div-mobile {
+    color: rgb(72, 72, 72);
+}
+
+.space-pics {
+    overflow: hidden;
+    width: 100%;
+    height: 475px;
+    display: flex;
+    flex-direction: row;
+}
+
+.space-pics-mobile {
+    overflow: hidden;
+    width: 100%;
+    height: 41em;
+    position: relative;
+}
+
+@media only screen and (max-width: 800px) {
+  .space-show-pic-column:first-of-type {
+    display: none;
+  }
+
+  .space-pics {
+      height: 300px;
+  }
+
+  .space-show-pic-column:nth-of-type(2) {
+    width: 100%;
+  }
+
+  .space-show-main-pic {
+      width: 75%;
+  }
+
+  .space-show-space-pics {
+      width: 25%;
+  }
+}
+
+
+.space-show-main-pic {
+    width: 50%;
+    overflow: hidden;
+    border: 1px solid rgb(147, 140, 140);
+}
+
+.space-show-main-pic-mobile {
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid rgb(147, 140, 140);
+    height: 41em;
+}
+
+.space-show-space-pics {
+    width: 50%;
+    display: flex;
+}
+
+.space-show-pic-column {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    position: relative;
+}
+
+.space-show-pic-image {
+    border: 1px solid gray;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+
+.photos-btn {
+    box-shadow: rgba(0, 0, 0, 0.14) 0px 1px 1px 1px !important;
+    background-color: #FFFFFF;
+    padding: 6px 15px;
+    font-weight: 500;
+    color: rgb(72, 72, 72);
+    border-radius: 4px;
+    position: absolute !important;
+    left: auto !important;
+    transform: translateY(0px) !important;
+    right: 24px !important;
+    bottom: 24px !important;
+    z-index: 1 !important;
+}
+
+.photos-btn-mobile {
+    box-shadow: rgba(0, 0, 0, 0.14) 0px 1px 1px 1px !important;
+    background-color: #FFFFFF;
+    padding: 15px 24px; 
+    font-size: 3em;
+    font-weight: 500;
+    color: rgb(72, 72, 72);
+    border-radius: 4px;
+    position: absolute !important;
+    left: auto !important;
+    transform: translateY(0px) !important;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1 !important;
+}
+
+.space-info-wrapper {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.space-info-wrapper-mobile {
+    display: flex;
+    flex-direction: column;
+}
+
+.space-show-info {
+    max-width: 35%;
+    width: 50%;
+    margin-left: auto;
+    margin-right: 30px;
+    width: auto;
+    padding-left: 24px;
+}
+
+.space-show-info-mobile {
+    width: auto !important;
+    padding-right: 65px !important;
+    padding-left: 65px !important;
+}
+
+
+.space-show-name {  
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.space-show-name-mobile {
+    padding-top: 50px;
+    font-weight: 600;
+    font-size: 4em;
+}
+
+.space-show-city {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.space-show-city-mobile {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    font-size: 2.75em;
+}
+
+.description-wrapper {
+    border-top: 1px solid #e6e6e6;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.space-show-description {
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.space-show-description-mobile {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    font-size: 2.75em;
+}
+
+.amenities-wrapper {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    border-bottom: 1px solid #e6e6e6;
+    margin-bottom: 15px;
+}
+
+.amenities-wrapper-mobile {
+    border-bottom: 1px solid #e6e6e6;
+
+}
+
+
+
+.amenities-header-mobile {
+    font-size: 2.75em;
+    font-weight: 600;
+    margin-top: 50px;
+    margin-bottom: 50px;
+
+}
+
+.amenities-div {
+    columns: 2 auto;
+}
+
+.amenities-div-mobile {
+    columns: 2 auto;
+    font-size: 2.75em;
+}
+
+.amenities-item {
+    padding-top: 20px;
+}
+
+.amenities-item-mobile {
+    margin-bottom: 50px;
+}
+
+.num-amenities-wrapper {
+    padding-top: 20px;
+    cursor: pointer;
+}
+
+.num-amenities-wrapper:hover {
+    cursor: pointer;
+}
+
+.num-amenities-text {
+    margin: 0;
+    color: #4abde9;
+}
+
+.num-amenities-text-mobile {
+    font-size: 2.75em;
+    color: #4abde9;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.space-summary {
+    margin-top: 24px;
+}
+
+.reserve-widget-wrapper {
+    margin-right: auto;
+    margin-left: 30px;
+    min-width: 376px;
+    padding-right: 24px;
+}
+
+@media only screen and (max-width: 625px) {
+    .reserve-widget {
+        position: fixed !important;
+        bottom: 0px !important;
+        left: 0px !important;
+        height: auto;
+        z-index: 2;
+        width: 100%;
+        background-color: white;
+        padding-top: 16px !important;
+        padding-bottom: 16px !important;
+        z-index: 4 !important;
+        border-top: 1px solid rgb(235, 235, 235) !important;
+    }
+
+    .contact-info-wrapper {
+        display: none;
+    }
+
+    .space-show-info {
+        max-width: 100%;
+    }
+}
+
+.reserve-widget {
+    margin-top: 24px;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-bottom: 12px;
+    padding-top: 12px;
+    border: 1px solid #e6e6e6
+}
+
+.reserve-widget-mobile {
+    bottom: 0px !important;
+    position: sticky;
+    height: 10vh;
+    line-height: 10vh;
+    left: 0px !important;
+    right: 0px !important;
+    background: white !important;
+    padding: 0 50px;
+    border-top: 2px solid rgb(235, 235, 235) !important;
+}
+
+.reserve-cost {
+    font-size: 22px;
+    font-weight: 700;
+    max-width: 30%;
+}
+
+.reserve-cost-mobile {
+    font-size: 3.5em;
+    font-weight: 700;
+
+}
+
+.reserve-per-month-mobile {
+    font-size: 2em;
+    font-weight: 525;
+    color: rgb(72, 72, 72) !important;
+}
+
+.reserve-tour-btn {
+    margin-top: 20px;
+    width: 100%;
+    color: white;
+    background-color: #4abde9;
+    font-family: inherit;
+    border-radius: 4px;
+    font-weight: 500;
+    padding: 10px 22px;
+}
+
+.contact-info-wrapper {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding-left: 24px;
+    padding-right: 24px;
+
+    padding-top: 12px;
+    border: 1px solid #e6e6e6;
+
+}
+
+.contact-info-wrapper-mobile {
+    margin-top: 50px;
+    margin-bottom: 25%;
+    height: 10vh;
+    font-size: 2.75em;
+
+}
+
+.contact-item-top {
+    padding-bottom: 12px;
+}
+.contact-item {
+    border-top: 1px solid #e6e6e6;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.contact-header-mobile {
+    font-weight: 600;
+    margin-bottom: 50px;
+}
+
+.contact-item-mobile {
+    margin-bottom: 50px;
+}
