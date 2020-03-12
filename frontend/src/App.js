@@ -16,7 +16,6 @@ function App() {
         <main>
           <Switch>
             <Redirect from="/" to="/auth" exact />
-            <Route path="/" component={null} />
             <Route path="/auth" component={AuthPage} />
             <Route path="/spaces" component={SpacePage} />
             <Route path="/bookings" component={BookingsPage} />

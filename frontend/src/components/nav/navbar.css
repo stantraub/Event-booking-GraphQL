@@ -37,19 +37,6 @@
     cursor: pointer;
 }
 
-.signup-button {
-    border-color: #4abde9;
-    color: #4abde9;
-    font-size: 16px;
-    border-radius: 4px;
-    outline: none;
-    cursor: pointer;
-}
-
-.signup-button:hover {
-    border-color: #009ACD;
-    color: #009ACD;
-}
 
 .signup-link {
     text-decoration: none;
