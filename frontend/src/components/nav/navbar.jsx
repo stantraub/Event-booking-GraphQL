@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './navbar.css'
-
+import AuthContext from '../../context/auth-context'
 // import {
 //   BrowserView,
 //   MobileView,
@@ -10,26 +10,44 @@ import './navbar.css'
 // } from "react-device-detect";
 
 const NavBar = props => (
-  <div className="main-nav">
-    <span>
-      <Link to="/" className="main-logo">
-        Coworking
-      </Link>
-    </span>
-    <div className="action-buttons-wrapper">
-      <div className="action-item">
-        <span>List a workspace</span>
+  <AuthContext.Consumer>
+  {(context) => {
+    return (
+      <div className="main-nav">
+        <span>
+          <Link to="/" className="main-logo">
+            Coworking
+          </Link>
+        </span>
+        <div className="action-buttons-wrapper">
+          {!context.token && (
+            <div className="action-item">
+              <span>Sign In/Signup</span>
+            </div>
+          )}
+          {context.token && (
+            <div className="action-item">
+              <span>List a workspace</span>
+            </div>
+          )}
+          <div className="action-item">
+            <Link style={{ textDecoration: "none", color: "black" }} to={"/spaces"}>
+              <span>Find a workspace</span>
+            </Link>
+          </div>
+          {context.token && (
+            <div className="action-item">
+              <span>Write a Review</span>
+            </div>
+          )}
+          
+        </div>
       </div>
-      <div className="action-item">
-        <Link style={{ textDecoration: "none", color: "black" }} to={"/spaces"}>
-          <span>Find a workspace</span>
-        </Link>
-      </div>
-      <div className="action-item">
-        <span>Write a Review</span>
-      </div>
-    </div>
-  </div>
+    )
+  }}
+
+  </AuthContext.Consumer>
+
 );
 
 export default NavBar;
