@@ -11,10 +11,16 @@ const app = express()
 
 app.use(bodyParser.json()) 
 
-app.user((req, res, next) => {
+app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*') // '*' means every host and client can send requests to this server
-  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS') //browser sends OPTIONS first
+  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS') //browser sends OPTIONS first before POST request to see if the POST request is allowed by the server
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
 
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200) 
+  }
+
+  next()
 })
 
 app.use(isAuth) //will run isAuth on every request
