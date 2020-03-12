@@ -32,13 +32,13 @@ class App extends Component {
             <NavBar />
             <main>
               <Switch>
-                {!this.state.token && <Redirect from="/" to="/auth" exact />}
                 {this.state.token && <Redirect from="/" to="/spaces" exact />}
                 {this.state.token && <Redirect from="/auth" to="/spaces" exact />}
                 {!this.state.token && <Route path="/auth" component={AuthPage} />}
                 <Route path="/spaces" component={SpacePage} />
                 {this.state.token && <Route path="/bookings" component={BookingsPage} />}
-              </Switch>
+                {!this.state.token && <Redirect to="/auth" exact />}
+                </Switch>
             </main>
           </AuthContext.Provider>
         </React.Fragment>

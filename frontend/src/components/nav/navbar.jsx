@@ -20,9 +20,12 @@ const NavBar = props => (
           </Link>
         </span>
         <div className="action-buttons-wrapper">
+          <div className="action-item">
+            <Link to="/spaces" style={{ textDecoration: "none", color: "black" }}>Find a workspace</Link>
+          </div>
           {!context.token && (
             <div className="action-item">
-              <span>Sign In/Signup</span>
+              <Link to="/auth" style={{ textDecoration: "none", color: "black" }}>Sign In/Signup</Link>
             </div>
           )}
           {context.token && (
@@ -30,15 +33,20 @@ const NavBar = props => (
               <span>List a workspace</span>
             </div>
           )}
-          <div className="action-item">
-            <Link style={{ textDecoration: "none", color: "black" }} to={"/spaces"}>
-              <span>Find a workspace</span>
-            </Link>
-          </div>
           {context.token && (
             <div className="action-item">
               <span>Write a Review</span>
             </div>
+          )}
+          {context.token && (
+            <React.Fragment>
+              <div className="action-item">
+                <Link to="/bookings" style={{ textDecoration: "none", color: "black" }}>Bookings</Link>
+              </div>
+              <div>
+                <button onClick={context.logout}>Logout</button>
+              </div>
+            </React.Fragment>
           )}
           
         </div>
