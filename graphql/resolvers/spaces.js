@@ -4,9 +4,6 @@ const { transformSpace } = require('./merge')
 
 module.exports = {
     spaces: async (args, req) => {
-        if (!req.isAuth) {
-          throw new Error("Unauthenticated");
-        }
         try {
             const spaces = await Space.find()
             return spaces.map(space => {

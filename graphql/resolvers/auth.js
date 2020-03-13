@@ -3,16 +3,6 @@ const User = require('../../models/user')
 const jwt = require('jsonwebtoken')
 
 module.exports = {
-    spaces: async () => {
-        try {
-            const spaces = await Space.find()
-            return spaces.map(space => {
-                return transformSpace(space)
-            })
-        } catch (err) {
-            throw (err)
-        }
-    },
     createUser: async args => {
         try {
             const exisitingUser = await User.findOne({ email: args.userInput.email })
