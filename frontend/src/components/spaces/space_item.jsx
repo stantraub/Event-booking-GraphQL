@@ -1,4 +1,5 @@
 import React from 'react';
+import './space_item.css'
 import { Link } from 'react-router-dom';
 import {
   BrowserView,
@@ -40,10 +41,27 @@ class SpaceItem extends React.Component {
 
   }
   render() {
-    console.log(this.props)
     return (
       <div className="space-item-wrapper">
-
+        <div className="space-item-info">
+          <div className="space-item-name">{this.props.name}</div>
+          <div className="space-item-amenities">
+            <div>
+              {this.props.city}, {this.props.state}
+            </div>
+            <span>{this.props.neighborhood}</span>
+            <div className="space-amenity-wrapper">
+              {this.includedAmenities()}
+            </div>
+            <div className="space-item-contact">
+              <div>{this.phone()}</div>
+              <div>{this.email()}</div>
+            </div>
+          </div>
+          <div className="space-item-cost">
+            <strong>${this.props.cost}</strong> per desk / month
+              </div>
+        </div>
       </div>
     );
   }
