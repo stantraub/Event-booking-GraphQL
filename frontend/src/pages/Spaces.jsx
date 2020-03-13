@@ -11,10 +11,10 @@ const SpacesPage = ({spaces}) => {
           All spaces in San Francisco
         </div>
         <div>
-          {spaces.map(({ _id, ...otherSpaceProps }, i) => {
+          {spaces.map(({ _id, ...otherSpaceProps }) => {
             return (
               <SpaceItem 
-                key={i} 
+                key={_id} 
                 spaceId={_id} 
                 {...otherSpaceProps}
               />
