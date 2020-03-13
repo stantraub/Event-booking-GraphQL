@@ -49,6 +49,7 @@ type Space {
     printersIncluded: Boolean
     bocceBall: Boolean
     napRoom: Boolean
+    mainPhoto: String
 }
 
 type User {
@@ -71,6 +72,7 @@ type AuthData {
 
 input SpaceInput {
     name: String!
+    mainPhoto: String
     address: String!
     city: String!
     state: String!

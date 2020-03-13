@@ -43,6 +43,7 @@ class SpaceItem extends React.Component {
   render() {
     return (
       <div className="space-item-wrapper">
+        <img className="main-pic" src={this.props.mainPhoto} />
         <div className="space-item-info">
           <div className="space-item-name">{this.props.name}</div>
           <div className="space-item-amenities">
@@ -60,7 +61,7 @@ class SpaceItem extends React.Component {
           </div>
           <div className="space-item-cost">
             <strong>${this.props.cost}</strong> per desk / month
-              </div>
+          </div>
         </div>
       </div>
     );

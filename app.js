@@ -1,4 +1,4 @@
-require("dotenv").config({ path: "/.env" });
+require("dotenv").config();
 const express = require('express')
 const bodyParser = require('body-parser')
 const graphqlHttp = require('express-graphql')
@@ -39,11 +39,8 @@ mongoose
   .connect(
     `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0-9taoe.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`
   )
-  .then(() => 
-    app.listen(8000)
-    )
-  .catch(err => console.log(err)
-);
+  .then(() => app.listen(8000))
+  .catch(err => console.log(err));
 
 
 

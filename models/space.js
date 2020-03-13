@@ -147,6 +147,10 @@ const spaceSchema = new Schema({
         type: Boolean,
         required: false
     },
+    mainPhoto: {
+        type: String,
+        required: false
+    },
     creator: {
         type: Schema.Types.ObjectId,
         ref: 'User'

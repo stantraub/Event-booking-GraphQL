@@ -5,6 +5,7 @@ import NavBar from "./components/nav/navbar"
 import AuthPage from "./pages/Auth"
 import BookingsPage from "./pages/Bookings"
 import SpacesPage from "./pages/Spaces"
+import Upload from "./pages/Upload"
 import Spaces from './components/spaces/space_index_container'
 import AuthContext from './context/auth-context'
 
@@ -31,7 +32,8 @@ class App extends Component {
             logout: this.logout }}>
             <NavBar />
             <main>
-              <Switch>
+              <Switch> 
+                <Route path="/upload" component={Upload} />
                 {this.state.token && <Redirect from="/" to="/spaces" exact />}
                 {this.state.token && <Redirect from="/auth" to="/spaces" exact />}
                 {!this.state.token && <Route path="/auth" component={AuthPage} />}

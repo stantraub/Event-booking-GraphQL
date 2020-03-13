@@ -9,6 +9,7 @@ const GET_SPACES = gql`
   {
     spaces {
       _id
+      mainPhoto
       neighborhood
       peopleCapacity
       officeCapacity

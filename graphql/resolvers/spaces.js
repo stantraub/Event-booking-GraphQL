@@ -2,7 +2,13 @@ const Space = require('../../models/space')
 const User = require('../../models/user')
 const { transformSpace } = require('./merge')
 const aws = require("aws-sdk")
+require("dotenv").config();
 
+aws.config.update({
+  accessKeyId: process.env.AWS_ACCESS_ID,
+  secretAccessKey: process.env.AWS_SECRET_KEY,
+  region: process.env.AWS_REGION
+});
 const s3Bucket = process.env.S3_BUCKET
 
 module.exports = {
@@ -46,7 +52,7 @@ module.exports = {
       throw new Error("Unauthenticated");
     }
     const space = new Space({
-      creator: req.user.id,
+      creator: "5e6a6402faab69dd8eacf979",
       name: args.spaceInput.name,
       address: args.spaceInput.address,
       city: args.spaceInput.city,
@@ -82,13 +88,14 @@ module.exports = {
       onsiteGym: args.spaceInput.onsiteGym,
       printersIncluded: args.spaceInput.printersIncluded,
       bocceBall: args.spaceInput.bocceBall,
-      napRoom: args.spaceInput.napRoom
+      napRoom: args.spaceInput.napRoom,
+      mainPhoto: args.spaceInput.mainPhoto
     });
     let createdSpace;
     try {
       const result = await space.save();
       createdSpace = transformSpace(result);
-      const creator = await User.findById(req.user.id);
+      const creator = await User.findById("5e6a6402faab69dd8eacf979");
       if (!creator) {
         throw new Error("User not found.");
       }
