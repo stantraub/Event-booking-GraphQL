@@ -9,6 +9,7 @@ type Booking {
     createdAt: String!
     updatedAt: String!
 }
+
 type Space {
     _id: ID!
     creator: User!
@@ -55,6 +56,11 @@ type User {
     email: String!
     password: String
     createdSpaces: [Space!]
+}
+
+type S3Payload {
+    signedRequest: String!,
+    url: String!
 }
 
 type AuthData {
@@ -118,6 +124,7 @@ type RootMutation {
     createUser(userInput: UserInput): User
     bookSpace(spaceId: ID): Booking!
     cancelBooking(bookingId: ID!): Space!
+    signS3(filename: String!, filetype: String!): S3Payload!
 }
 
 schema {

@@ -1,7 +1,0 @@
-{
-    "env": {
-        "MONGO_USER": "stantraub",
-        "MONGO_PASSWORD": "6H1bsnx45dWo3o35",
-        "MONGO_DB": "spaces-react-dev"
-    }
-}
